@@ -1,4 +1,4 @@
-import { GoogleGenAI } from "@google/genai";
+import OpenAI from "openai";
 
 export default async function handler(req: any, res: any) {
 
@@ -8,144 +8,128 @@ export default async function handler(req: any, res: any) {
     });
   }
 
+
   try {
 
     const {
       message,
-      imageBase64,
-      mimeType,
       history,
       language
     } = req.body;
 
 
-    if (!message && !imageBase64) {
+    if (!message) {
       return res.status(400).json({
-        error: "Message or image is required."
+        error: "Message is required"
       });
     }
 
 
-    const apiKey = process.env.GEMINI_API_KEY;
+    const apiKey = process.env.OPENROUTER_API_KEY;
+
 
     if (!apiKey) {
-      throw new Error("GEMINI_API_KEY missing");
+      throw new Error("OPENROUTER_API_KEY missing");
     }
 
 
-    const ai = new GoogleGenAI({
-      apiKey
+    const client = new OpenAI({
+
+      apiKey: apiKey,
+
+      baseURL:
+        "https://openrouter.ai/api/v1"
+
     });
 
-
-    const contents: any[] = [];
 
 
     const isSinhala =
       language === "sinhala" ||
-      /[\u0D80-\u0DFF]/.test(message || "");
+      /[\u0D80-\u0DFF]/.test(message);
+
 
 
     const systemPrompt = `
+
 You are "A/L Physics AI Master Bot".
 
 You are an Advanced Level Physics tutor.
 
 Rules:
-1. Explain physics step-by-step.
-2. Solve numerical problems clearly.
-3. Use correct formulas and SI units.
-4. Explain concepts simply.
-5. Answer in Sinhala if the user uses Sinhala.
-6. Answer in English otherwise.
 
-${isSinhala
-? "Respond completely in Sinhala using Sri Lankan A/L Physics terminology."
-: "Respond in clear English."
-}
+- Explain physics step by step.
+- Solve calculations clearly.
+- Show formulas and SI units.
+- Explain difficult concepts simply.
+- Answer Sinhala questions in Sinhala.
+- Answer English questions in English.
+
+${isSinhala 
+? "Use Sri Lankan A/L Physics Sinhala terminology."
+: "Use clear English."}
+
 `;
 
 
-    if (history && Array.isArray(history)) {
 
-      for (const h of history) {
+    const messages:any[] = [
 
-        contents.push({
-          role: h.role === "assistant"
-            ? "model"
-            : "user",
-
-          parts: [
-            {
-              text: h.content
-            }
-          ]
-        });
-
+      {
+        role:"system",
+        content:systemPrompt
       }
 
-    }
+    ];
 
 
-    const parts:any[] = [];
 
+    if(history && Array.isArray(history)) {
 
-    if(imageBase64){
+      history.forEach((h:any)=>{
 
-      parts.push({
+        messages.push({
 
-        inlineData:{
-          mimeType: mimeType || "image/jpeg",
+          role:
+          h.role === "assistant"
+          ? "assistant"
+          : "user",
 
-          data:imageBase64.replace(
-            /^data:image\/\w+;base64,/,
-            ""
-          )
-        }
+          content:h.content
+
+        });
 
       });
 
     }
 
 
-    parts.push({
 
-      text:
-      `${systemPrompt}
-
-Student Question:
-${message || "Analyze this physics image."}`
-
-    });
-
-
-
-    contents.push({
+    messages.push({
 
       role:"user",
 
-      parts
+      content:message
 
     });
 
 
 
     const response =
-      await ai.models.generateContent({
+      await client.chat.completions.create({
 
-        model:"gemini-2.0-flash",
+        model:
+        "meta-llama/llama-3.1-8b-instruct:free",
 
-        contents,
-
-        config:{
-          tools:[
-            {
-              googleSearch:{}
-            }
-          ]
-        }
+        messages
 
       });
+
+
+
+    const reply =
+      response.choices[0]
+      .message.content;
 
 
 
@@ -154,31 +138,28 @@ ${message || "Analyze this physics image."}`
       success:true,
 
       reply:
-        response.text || 
-        "I could not generate a response.",
-
-      groundingSources:[]
+      reply ||
+      "No response generated."
 
     });
 
 
-  }
 
-  catch(error:any){
+  } catch(error:any) {
+
 
     console.log(error);
 
 
     res.json({
 
-      success:true,
+      success:false,
 
       reply:
-      "Physics AI is temporarily using offline mode. Please try again.",
-
-      groundingSources:[]
+      "Physics AI is temporarily unavailable. Please try again."
 
     });
+
 
   }
 
