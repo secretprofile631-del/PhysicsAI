@@ -1,166 +1,211 @@
-import OpenAI from "openai";
-
 export default async function handler(req: any, res: any) {
 
-  if (req.method !== "POST") {
-    return res.status(405).json({
-      error: "Method not allowed"
-    });
-  }
-
-
-  try {
-
-    const {
-      message,
-      history,
-      language
-    } = req.body;
-
-
-    if (!message) {
-      return res.status(400).json({
-        error: "Message is required"
-      });
+    if (req.method !== "POST") {
+        return res.status(405).json({
+            error: "Method not allowed"
+        });
     }
 
 
-    const apiKey = process.env.OPENROUTER_API_KEY;
+    try {
+
+        const { message } = req.body;
 
 
-    if (!apiKey) {
-      throw new Error("OPENROUTER_API_KEY missing");
-    }
+        if (!message) {
+            return res.status(400).json({
+                error: "Message required"
+            });
+        }
 
 
-    const client = new OpenAI({
-
-      apiKey: apiKey,
-
-      baseURL:
-        "https://openrouter.ai/api/v1"
-
-    });
+        const question = message.toLowerCase();
 
 
-
-    const isSinhala =
-      language === "sinhala" ||
-      /[\u0D80-\u0DFF]/.test(message);
+        let reply = "";
 
 
+        // Newton Laws
+        if (
+            question.includes("newton") ||
+            question.includes("force")
+        ) {
 
-    const systemPrompt = `
+            reply = `
+Newton's Laws of Motion:
 
-You are "A/L Physics AI Master Bot".
+Newton's First Law:
+An object remains at rest or continues moving with constant velocity unless an external force acts on it.
 
-You are an Advanced Level Physics tutor.
+Newton's Second Law:
 
-Rules:
+F = ma
 
-- Explain physics step by step.
-- Solve calculations clearly.
-- Show formulas and SI units.
-- Explain difficult concepts simply.
-- Answer Sinhala questions in Sinhala.
-- Answer English questions in English.
+Where:
+F = Force (N)
+m = Mass (kg)
+a = Acceleration (m/s²)
 
-${isSinhala 
-? "Use Sri Lankan A/L Physics Sinhala terminology."
-: "Use clear English."}
+Example:
+If a 5kg object accelerates at 2m/s²:
 
+F = 5 × 2
+F = 10N
+
+Newton's Third Law:
+Every action has an equal and opposite reaction.
 `;
 
+        }
 
 
-    const messages:any[] = [
+        // Motion
+        else if (
+            question.includes("velocity") ||
+            question.includes("acceleration") ||
+            question.includes("motion")
+        ) {
 
-      {
-        role:"system",
-        content:systemPrompt
-      }
+            reply = `
+Motion Concepts:
 
-    ];
+Velocity:
+Velocity is the rate of change of displacement.
+
+Formula:
+
+v = s/t
+
+where:
+v = velocity
+s = displacement
+t = time
+
+
+Acceleration:
+
+a = (v-u)/t
+
+where:
+u = initial velocity
+v = final velocity
+t = time
+`;
+
+        }
+
+
+        // Energy
+        else if (
+            question.includes("energy") ||
+            question.includes("work")
+        ) {
+
+            reply = `
+Energy and Work:
+
+Work:
+
+W = F × d
+
+where:
+W = Work done
+F = Force
+d = Distance
+
+
+Kinetic Energy:
+
+KE = 1/2 mv²
+
+
+Potential Energy:
+
+PE = mgh
+`;
+
+        }
+
+
+        // Electricity
+        else if (
+            question.includes("electric") ||
+            question.includes("voltage") ||
+            question.includes("current")
+        ) {
+
+            reply = `
+Electricity:
+
+Ohm's Law:
+
+V = IR
+
+Where:
+
+V = Voltage (V)
+I = Current (A)
+R = Resistance (Ω)
+
+
+Electrical Power:
+
+P = VI
+`;
+
+        }
+
+
+        // General physics
+        else {
+
+            reply = `
+I am Physics AI Tutor.
+
+I can help with:
+
+• Mechanics
+• Newton's Laws
+• Motion
+• Energy
+• Electricity
+• Physics formulas
+• A/L Physics concepts
+
+Please ask a specific physics question.
+`;
+
+        }
 
 
 
-    if(history && Array.isArray(history)) {
+        return res.json({
 
-      history.forEach((h:any)=>{
+            success:true,
 
-        messages.push({
+            reply: reply,
 
-          role:
-          h.role === "assistant"
-          ? "assistant"
-          : "user",
-
-          content:h.content
+            groundingSources:[]
 
         });
 
-      });
 
     }
 
 
+    catch(error) {
 
-    messages.push({
-
-      role:"user",
-
-      content:message
-
-    });
+        console.log(error);
 
 
+        return res.status(500).json({
 
-    const response =
-      await client.chat.completions.create({
+            success:false,
 
-       model:
-"google/gemma-3-4b-it:free",
+            error:"Physics engine error"
 
-        messages
+        });
 
-      });
-
-
-
-    const reply =
-      response.choices[0]
-      .message.content;
-
-
-
-    res.json({
-
-      success:true,
-
-      reply:
-      reply ||
-      "No response generated."
-
-    });
-
-
-
-  } catch(error:any) {
-
-
-    console.log(error);
-
-
-    res.json({
-
-      success:false,
-
-      reply:
-      "Physics AI is temporarily unavailable. Please try again."
-
-    });
-
-
-  }
+    }
 
 }
