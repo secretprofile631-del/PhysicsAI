@@ -133,7 +133,7 @@ ${message || "Analyze this physics image."}`
     const response =
       await ai.models.generateContent({
 
-        model:"gemini-2.5-flash-preview-09-2025",
+        model:"gemini-2.0-flash",
 
         contents,
 

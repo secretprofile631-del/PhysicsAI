@@ -79,7 +79,7 @@ Ensure your analysis:
     parts.push({ text: promptText });
 
     const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash-preview-09-2025',
+      model: 'gemini-2.0-flash',
       contents: { parts },
       config: {
         responseMimeType: 'application/json',
@@ -184,7 +184,7 @@ app.post('/api/generate-notes', async (req, res) => {
     const isSinhalaNote = language === 'sinhala' || /[\u0D80-\u0DFF]/.test((topicName || '') + (subtopic || ''));
 
     const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash-preview-09-2025',
+      model: 'gemini-2.0-flash',
       contents: `
 You are a top-tier Advanced Level Physics master tutor.
 Generate comprehensive, concise, bulleted SHORT NOTES for the A/L Physics topic: "${topicName}" (Subtopic: "${subtopic || 'General Overview'}").
@@ -291,7 +291,7 @@ When responding:
     });
 
     const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash-preview-09-2025',
+      model: 'gemini-2.0-flash',
       contents,
       config: {
         tools: [{ googleSearch: {} }],
@@ -354,7 +354,7 @@ ${isSinhalaSearch ? 'Provide the summary and link explanations in Sinhala (เทเท
 `;
 
     const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash-preview-09-2025',
+      model: 'gemini-2.0-flash',
       contents: promptText,
       config: {
         tools: [{ googleSearch: {} }],
@@ -401,7 +401,7 @@ app.post('/api/generate-quiz', async (req, res) => {
       : `Generate 3 high-quality Advanced Level (A/L) Physics multiple-choice questions for topic: "${topicName || 'Mechanics'}". Include options A, B, C, D, the index of correct answer (0-3), and detailed step-by-step solution.`;
 
     const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash-preview-09-2025',
+      model: 'gemini-2.0-flash',
       contents: promptText,
       config: {
         responseMimeType: 'application/json',
