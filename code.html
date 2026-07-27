@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sudda &amp; Dilru — The Gallery Exhibition</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&amp;family=Manrope:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "surface-container-high": "#282a2b",
+                "on-background": "#e1e3e4",
+                "on-primary-container": "#6d0047",
+                "primary-fixed": "#ffd8e7",
+                "on-secondary": "#381385",
+                "on-surface": "#e1e3e4",
+                "tertiary-container": "#9b9eaf",
+                "outline": "#a28a93",
+                "secondary-fixed-dim": "#cebdff",
+                "secondary": "#cebdff",
+                "tertiary": "#c3c6d7",
+                "on-tertiary": "#2c303d",
+                "error-container": "#93000a",
+                "inverse-on-surface": "#2e3132",
+                "surface-tint": "#ffafd3",
+                "surface-bright": "#373a3b",
+                "inverse-surface": "#e1e3e4",
+                "on-primary-fixed": "#3d0026",
+                "tertiary-fixed": "#dfe2f3",
+                "surface-container": "#1d2021",
+                "on-surface-variant": "#dac0c9",
+                "on-secondary-fixed-variant": "#4f319c",
+                "surface-container-lowest": "#0c0f10",
+                "on-secondary-fixed": "#21005e",
+                "on-tertiary-fixed": "#171b28",
+                "on-secondary-container": "#bea8ff",
+                "outline-variant": "#544249",
+                "on-tertiary-container": "#323543",
+                "tertiary-fixed-dim": "#c3c6d7",
+                "error": "#ffb4ab",
+                "inverse-primary": "#a43073",
+                "primary-container": "#f472b6",
+                "surface": "#111415",
+                "background": "#0c0f10",
+                "surface-container-low": "#191c1d",
+                "surface-container-highest": "#323536",
+                "primary": "#ffafd3",
+                "on-primary-fixed-variant": "#85145a",
+                "surface-variant": "#323536",
+                "surface-dim": "#111415",
+                "on-error-container": "#ffdad6",
+                "secondary-fixed": "#e8ddff",
+                "on-primary": "#620040",
+                "primary-fixed-dim": "#ffafd3",
+                "on-tertiary-fixed-variant": "#434654",
+                "secondary-container": "#4f319c",
+                "on-error": "#690005"
+            },
+            "borderRadius": {
+                "DEFAULT": "0px",
+                "lg": "0px",
+                "xl": "0px",
+                "full": "9999px"
+            },
+            "spacing": {
+                "gutter": "40px",
+                "stack-lg": "80px",
+                "margin-desktop": "80px",
+                "container-max": "1400px",
+                "stack-sm": "16px",
+                "margin-mobile": "24px",
+                "base": "8px",
+                "stack-md": "32px"
+            },
+            "fontFamily": {
+                "label-caps": ["Manrope"],
+                "headline-sm": ["Playfair Display"],
+                "display-lg": ["Playfair Display"],
+                "display-lg-mobile": ["Playfair Display"],
+                "headline-md": ["Playfair Display"],
+                "body-md": ["Manrope"],
+                "body-lg": ["Manrope"]
+            },
+            "fontSize": {
+                "label-caps": ["11px", {"lineHeight": "1.0", "letterSpacing": "0.25em", "fontWeight": "500"}],
+                "headline-sm": ["28px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                "display-lg": ["80px", {"lineHeight": "1.0", "letterSpacing": "-0.03em", "fontWeight": "400"}],
+                "display-lg-mobile": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "400"}],
+                "headline-md": ["40px", {"lineHeight": "1.2", "fontWeight": "400"}],
+                "body-md": ["15px", {"lineHeight": "1.8", "fontWeight": "300"}],
+                "body-lg": ["20px", {"lineHeight": "1.7", "fontWeight": "300"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #0c0f10;
+            color: #e1e3e4;
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .gallery-image-container {
+            overflow: hidden;
+            background: #191c1d;
+        }
+
+        .gallery-image {
+            transition: transform 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+            filter: grayscale(20%);
+        }
+
+        .gallery-image-container:hover .gallery-image {
+            transform: scale(1.05);
+            filter: grayscale(0%);
+        }
+
+        .line-accent {
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(255,175,211,0.5), transparent);
+            width: 100%;
+        }
+
+        .vertical-text {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+        }
+
+        ::selection {
+            background: rgba(255, 175, 211, 0.3);
+            color: white;
+        }
+    </style>
+</head>
+<body class="font-body-md">
+<!-- Navigation -->
+<nav class="fixed top-0 w-full z-50 mix-blend-difference">
+<div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-8 max-w-container-max mx-auto">
+<a class="font-display-lg text-2xl tracking-tight text-white" href="#">S&amp;D.</a>
+<div class="hidden md:flex items-center gap-12">
+<a class="text-label-caps text-white hover:opacity-60 transition-opacity" href="#exhibition">Exhibition</a>
+<a class="text-label-caps text-white hover:opacity-60 transition-opacity" href="#chronicle">Chronicle</a>
+<a class="text-label-caps text-white hover:opacity-60 transition-opacity" href="#testimony">Testimony</a>
+</div>
+<div class="flex items-center gap-6">
+<span class="material-symbols-outlined text-white text-xl cursor-pointer hover:opacity-60">menu</span>
+</div>
+</div>
+</nav>
+<!-- Hero Section -->
+<header class="relative min-h-screen flex items-center justify-center pt-24 pb-12 overflow-hidden px-margin-mobile">
+<div class="max-w-4xl text-center z-10">
+<span class="reveal text-label-caps text-primary mb-8 block" id="r1">AN EXHIBITION OF LOVE</span>
+<h1 class="reveal font-display-lg text-display-lg-mobile md:text-display-lg mb-12" id="r2">Sudda &amp; Dilru</h1>
+<p class="reveal font-body-lg max-w-xl mx-auto text-on-surface-variant italic mb-12" id="r3">
+            "A collection of moments frozen in time, capturing the essence of a journey that began with a single look."
+        </p>
+<div class="reveal line-accent mx-auto w-24" id="r4"></div>
+</div>
+<div class="absolute bottom-12 left-1/2 -translate-x-1/2 animate-bounce opacity-40">
+<span class="material-symbols-outlined font-light text-3xl">keyboard_double_arrow_down</span>
+</div>
+</header>
+<!-- Main Gallery Section -->
+<main class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-stack-lg" id="exhibition">
+<!-- Entry 01: Ella Saree -->
+<section class="grid grid-cols-1 md:grid-cols-12 gap-gutter mb-[150px] items-center">
+<div class="md:col-span-7 gallery-image-container reveal" style="aspect-ratio: 3/4;">
+<img alt="Ella Saree" class="gallery-image w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUumB3_FiG6V3_wOO3LD7RxkXbrcMWRiXZSG2JydTdzRDKXmOPy8y6rIOzBy1tugyitEzI9fyEM9FfvuZkQ1KH0vW2TXekuah8XH5g_80aYGWmJAUUHEGhVuK0OSgn9dD1IhfsG62DGKEuaYNq-4ABd1H6JgVU8MI5w2eQdYlQTe5cvItWkL8j0XRFFsXljQLDes8lgitMerUsoWISQJyZTI5BvDZsVqBJ6Oh54h9jW8kQlGez9SPJGKL71C5ABy0lWMo"/>
+</div>
+<div class="md:col-span-4 md:col-start-9 reveal">
+<span class="text-label-caps text-primary/60 mb-4 block">ENTRY NO. 01</span>
+<h2 class="font-headline-md mb-6">Grace in Ella</h2>
+<p class="text-on-surface-variant mb-8">Capturing the timeless elegance of tradition against the backdrop of our shared dreams. A moment of stillness and quiet beauty.</p>
+<div class="h-px w-full bg-outline-variant/30"></div>
+<p class="mt-4 text-[10px] text-label-caps opacity-40 italic">2025 SERIES</p>
+</div>
+</section>
+<!-- Entry 02: Embrace -->
+<section class="grid grid-cols-1 md:grid-cols-12 gap-gutter mb-[150px] items-center">
+<div class="md:col-span-4 order-2 md:order-1 reveal">
+<span class="text-label-caps text-primary/60 mb-4 block">ENTRY NO. 02</span>
+<h2 class="font-headline-md mb-6">The Embrace</h2>
+<p class="text-on-surface-variant mb-8">In the curve of an arm and the leaning of a head, we find sanctuary. This is where the world fades and only 'us' remains.</p>
+<div class="h-px w-full bg-outline-variant/30"></div>
+</div>
+<div class="md:col-span-7 md:col-start-6 order-1 md:order-2 gallery-image-container reveal" style="aspect-ratio: 4/3;">
+<img alt="Embrace" class="gallery-image w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuABoS43dtYZQZk1fDkUwThjFQ1PmbxjjGtqmXWs1dWyTWEsXkCZzQgdhJAN_my7KMyMZaDejO8wxiGtHkuBgePnG74Ba1Hp9YENo2EMWicD9xuDiIGw59w_UoqbSEZXU8y2riZxahcCjV1XoMleXjZKS5Mayd4KBIjR2kpWxoZHDSGP0VRPxzWW7eqZN2Jf9zTSSCteRR9buz_YGH6sjX_838Jf2VZfce04sx5kmXiyTCRz0A3ZRbJU_1GWAE4lM_lXatE"/>
+</div>
+</section>
+<!-- Mid-Gallery Quote -->
+<section class="py-stack-lg text-center reveal mb-[150px]">
+<h3 class="font-display-lg text-headline-md md:text-[56px] leading-tight text-on-surface/90 italic">
+            "Art is not what you see,<br/>but what you make others feel."
+        </h3>
+</section>
+<!-- Grid Layout: Waterfall & Formal -->
+<section class="grid grid-cols-1 md:grid-cols-12 gap-gutter mb-[150px]">
+<div class="md:col-span-5 reveal">
+<div class="gallery-image-container mb-8" style="aspect-ratio: 1/1;">
+<img alt="Waterfall" class="gallery-image w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCE8CG1dT0A7WwmagGSd4pEoKWChoCwmN2w9uSpQwiCsD3b4DR9hSUO0j7Lgy5bkV8rncsTm_gmcDjptTdbdNqy1N2DzGEJiR0bB5BQ_pZd7tD6mOSGwMPiDrqrC2gq2mtTUrtjgbYyIsfeBpmOKr5p4GPqu8Zb2Ifbp2p36K1h-ao8kiI6_2KhKSIKMCpfg5IFZekWNHIiKiGKXyKjF3do9N-jl6nYt4pDzkj6ceDi4ppDGiSWGJLqyHLvJ5aSLo08vz0"/>
+</div>
+<h3 class="font-headline-sm mb-2">Wild Hearts</h3>
+<p class="text-sm text-on-surface-variant">The roar of the waterfall was quiet compared to the peace we found in each other's company.</p>
+</div>
+<div class="md:col-span-6 md:col-start-7 pt-24 reveal">
+<div class="gallery-image-container mb-8" style="aspect-ratio: 1/1.2;">
+<img alt="Formal" class="gallery-image w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC53HrWE--Ow1aVitAHPB8eO5VTp8cTEN3a8_AcHklTQtru-8YBzquIWgSeQTeffP9NNE12B8ik7AP6ECglPigTfB931gUeo8zhgqDtmD2WvP5wmAKu_NLAs7eANxF5dD4aihnxIoJXRY9fPFt9UTvPwvH0k0UCpPGFARwU7DHIIpsDaanflBJTiG_RE592uFsB5EQUgj3GGvb185MTBiLFUJgShlWaO28L4-cs-2rhfgpZzQZtSd-CHHnxDj4m6A4NmiE"/>
+</div>
+<h3 class="font-headline-sm mb-2">The Gala</h3>
+<p class="text-sm text-on-surface-variant">Dressed for the world, but focused only on the person standing right beside us.</p>
+</div>
+</section>
+<!-- Large Vertical Feature: Back View -->
+<section class="mb-[150px] reveal relative">
+<div class="gallery-image-container w-full" style="height: 80vh;">
+<img alt="Back View" class="gallery-image w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNm2T4a1HEKPS_em3aAcQQYh6DgJj7nNUS5A6adxUQS49cWqF8M71nTHpdD2yydNUzP9sRFf1OMpiPiOfIUuNCJE6CDuMtM4jNDpDVwEWAMwEVic5TpI9pAS0oMS9z-sGxWaoIiKw16NiQDa-vzjG7Jc7hBbPpRyguvSlmmy5FlcXjGET7co_xyRIfZdy9v8WxVQnkJLTZl5w_nfu13-01q8YtprDK_zrugIAIixNvq3OnMS8jVDWJ25Cb-eVBO2IsTgY"/>
+</div>
+<div class="absolute bottom-12 right-12 bg-surface p-8 max-w-sm hidden md:block">
+<h3 class="font-headline-sm mb-4">Perspective</h3>
+<p class="text-sm text-on-surface-variant">Looking forward together, into a future as vast and beautiful as the landscapes we explore.</p>
+</div>
+</section>
+<!-- Candid Series -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-20 mb-[150px]">
+<div class="reveal">
+<div class="gallery-image-container mb-8" style="aspect-ratio: 1/1;">
+<img alt="Laughter" class="gallery-image w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXsFw2KEE47ZTYZ5KzcT25_S3rCz3BrMiy3quPJ0-WtVqABr7YxpN2AK-iBKCqHre-nFekWjdtivBiZm081qELq6RFEtH1H_FhjOmWhfJhEDjg5HKs0kvrpfD0PNA8U75ZeVVHB8LJ8dUn1y2ds8_0x6L2twvorJGvhxIfmWFQBVzd21Dm5hbD2WGH-vyPSEKmzA-FLNuumS-wOCZKH6tkruYOdHDilEKbNtvsJxReTKcb8fHOLrYZ5ZJw24KokxDJAyY"/>
+</div>
+<h3 class="text-label-caps mb-2">STUDY OF JOY</h3>
+<p class="font-body-md text-on-surface-variant">Pure, unscripted, and overflowing. The sound of our happiness captured in pixels.</p>
+</div>
+<div class="reveal md:mt-40">
+<div class="gallery-image-container mb-8" style="aspect-ratio: 1/1;">
+<img alt="Bus Kiss" class="gallery-image w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKclX7QgOajP2NykoHd_ikElyPQY6vnlf3uv57GemRfgEaUMmMQlUOwCQyTyKGJeLTwjVgyLbjvNeMDQJvO6ocdF7J4kfUOIFQ8c9iH4Zek6wIgI-USrwFoYroqIlfom-a1F4Ih_bXg4QvIwiT-YIlceNGVXwfjB9rGjtWgeKeUifqNM7EwZnZHRK2wELrQUwX9gn8Rf7UbGVVSsTJgsycUSusKJyGPrMLNHit6LlXH6IESFTs-o4NSuhABLxhseGZscc"/>
+</div>
+<h3 class="text-label-caps mb-2">STUDY OF INTIMACY</h3>
+<p class="font-body-md text-on-surface-variant">A stolen moment in the bustle of the everyday. A reminder that love lives in the mundane.</p>
+</div>
+</section>
+</main>
+<!-- Chronicle Section -->
+<section class="bg-surface-container py-stack-lg border-y border-outline-variant/10" id="chronicle">
+<div class="max-w-4xl mx-auto px-margin-mobile">
+<div class="text-center mb-stack-lg reveal">
+<span class="text-label-caps text-primary tracking-[0.4em] mb-4 block">THE CHRONICLE</span>
+<h2 class="font-display-lg text-headline-md md:text-headline-md">Milestones of Us</h2>
+</div>
+<div class="space-y-24">
+<div class="flex flex-col md:flex-row gap-12 items-start reveal">
+<span class="font-display-lg text-primary/20 text-6xl">22</span>
+<div>
+<h4 class="font-headline-sm mb-2 text-primary">The Beginning</h4>
+<p class="text-on-surface-variant body-lg italic">A/L Classes where glances turned into conversations.</p>
+</div>
+</div>
+<div class="flex flex-col md:flex-row gap-12 items-start reveal">
+<span class="font-display-lg text-primary/20 text-6xl">24</span>
+<div>
+<h4 class="font-headline-sm mb-2 text-primary">The Promise</h4>
+<p class="text-on-surface-variant body-lg italic">December 27. The day we made it official. Forever started then.</p>
+</div>
+</div>
+<div class="flex flex-col md:flex-row gap-12 items-start reveal">
+<span class="font-display-lg text-primary/20 text-6xl">25</span>
+<div>
+<h4 class="font-headline-sm mb-2 text-primary">The Adventure</h4>
+<p class="text-on-surface-variant body-lg italic">Ella. The Nine Arch Bridge. The mist that made everything feel magical.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Final Word Section -->
+<section class="py-[200px] px-margin-mobile text-center" id="testimony">
+<div class="max-w-2xl mx-auto reveal">
+<span class="material-symbols-outlined text-primary text-4xl mb-12 font-light">favorite</span>
+<h2 class="font-display-lg text-headline-md mb-8">My Dear Dilru,</h2>
+<p class="font-body-lg text-on-surface-variant mb-12 italic leading-relaxed">
+            "These images are but a small window into the universe we have created together. From the classrooms to the mountain peaks of Ella, every step with you is my favorite part of the story. I love you, yesterday, today, and for all the tomorrows we have yet to frame."
+        </p>
+<button class="text-label-caps border border-primary text-primary px-12 py-5 hover:bg-primary hover:text-on-primary transition-all duration-500 uppercase tracking-[0.5em]" id="surprise-btn">
+            EXHIBIT EXTRA
+        </button>
+</div>
+</section>
+<!-- Footer -->
+<footer class="py-12 border-t border-outline-variant/10 px-margin-mobile">
+<div class="max-w-container-max mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+<p class="text-label-caps opacity-40">SUDDA &amp; DILRU — EST. 2024</p>
+<p class="font-display-lg text-xl">S&amp;D.</p>
+<p class="text-label-caps opacity-40">© THE GALLERY EXHIBITION</p>
+</div>
+</footer>
+<!-- Cinematic Surprise Overlay -->
+<div class="fixed inset-0 z-[100] bg-black opacity-0 pointer-events-none flex items-center justify-center transition-opacity duration-1000" id="cinematic-overlay">
+<div class="text-center scale-95 opacity-0 transition-all duration-1000" id="surprise-content">
+<h2 class="font-display-lg text-white text-6xl md:text-8xl mb-8">Infinite</h2>
+<p class="text-label-caps text-primary tracking-[0.8em]">BEYOND THE FRAME</p>
+<div class="mt-16 flex justify-center gap-8">
+<span class="material-symbols-outlined text-primary text-4xl animate-pulse">heart_plus</span>
+</div>
+<button class="mt-20 text-white/30 hover:text-white transition-colors text-[10px] uppercase tracking-[0.4em]" onclick="closeSurprise()">CLOSE CURTAIN</button>
+</div>
+</div>
+<script>
+    // Intersection Observer for Scroll Reveals
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px"
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Staggered Hero Entrance
+    window.addEventListener('load', () => {
+        setTimeout(() => document.getElementById('r1').classList.add('active'), 300);
+        setTimeout(() => document.getElementById('r2').classList.add('active'), 600);
+        setTimeout(() => document.getElementById('r3').classList.add('active'), 900);
+        setTimeout(() => document.getElementById('r4').classList.add('active'), 1200);
+    });
+
+    // Surprise Modal Logic
+    const surpriseBtn = document.getElementById('surprise-btn');
+    const overlay = document.getElementById('cinematic-overlay');
+    const surpriseContent = document.getElementById('surprise-content');
+
+    surpriseBtn.addEventListener('click', () => {
+        overlay.classList.remove('pointer-events-none');
+        overlay.classList.add('opacity-100');
+        setTimeout(() => {
+            surpriseContent.classList.remove('opacity-0', 'scale-95');
+            surpriseContent.classList.add('opacity-100', 'scale-100');
+        }, 100);
+    });
+
+    function closeSurprise() {
+        surpriseContent.classList.remove('opacity-100', 'scale-100');
+        surpriseContent.classList.add('opacity-0', 'scale-95');
+        setTimeout(() => {
+            overlay.classList.remove('opacity-100');
+            overlay.classList.add('pointer-events-none');
+        }, 800);
+    }
+
+    // Parallax on Scroll for Images
+    window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        document.querySelectorAll('.gallery-image').forEach(img => {
+            const speed = 0.05;
+            const yPos = -(scrolled * speed);
+            // Only apply if parent is in view for performance
+            const rect = img.parentElement.getBoundingClientRect();
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
+                 img.style.transform = `translateY(${yPos % 30}px) scale(1.05)`;
+            }
+        });
+    });
+</script>
+</body></html>

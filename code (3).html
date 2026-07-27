@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sudda &amp; Dilru — The Modern Journal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Config Verbatim -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-container": "#4f319c",
+                    "on-error": "#690005",
+                    "on-primary-container": "#6d0047",
+                    "on-primary-fixed-variant": "#85145a",
+                    "tertiary-fixed-dim": "#c3c6d7",
+                    "primary-fixed": "#ffd8e7",
+                    "error-container": "#93000a",
+                    "on-tertiary-container": "#323543",
+                    "on-tertiary": "#2c303d",
+                    "surface-container-highest": "#323536",
+                    "surface": "#111415",
+                    "inverse-surface": "#e1e3e4",
+                    "tertiary-fixed": "#dfe2f3",
+                    "primary": "#ffafd3",
+                    "error": "#ffb4ab",
+                    "surface-dim": "#111415",
+                    "surface-container": "#1d2021",
+                    "inverse-primary": "#a43073",
+                    "surface-container-high": "#282a2b",
+                    "tertiary-container": "#9b9eaf",
+                    "on-surface": "#e1e3e4",
+                    "surface-tint": "#ffafd3",
+                    "on-error-container": "#ffdad6",
+                    "on-secondary-fixed": "#21005e",
+                    "on-secondary-container": "#bea8ff",
+                    "on-surface-variant": "#dac0c9",
+                    "outline-variant": "#544249",
+                    "on-primary": "#620040",
+                    "on-tertiary-fixed": "#171b28",
+                    "secondary": "#cebdff",
+                    "background": "#020617",
+                    "surface-variant": "#323536",
+                    "surface-bright": "#373a3b",
+                    "secondary-fixed": "#e8ddff",
+                    "primary-fixed-dim": "#ffafd3",
+                    "outline": "#a28a93",
+                    "surface-container-lowest": "#0c0f10",
+                    "on-secondary": "#381385",
+                    "on-background": "#e1e3e4",
+                    "surface-container-low": "#191c1d",
+                    "inverse-on-surface": "#2e3132",
+                    "on-primary-fixed": "#3d0026",
+                    "on-secondary-fixed-variant": "#4f319c",
+                    "primary-container": "#f472b6",
+                    "secondary-fixed-dim": "#cebdff",
+                    "tertiary": "#c3c6d7",
+                    "on-tertiary-fixed-variant": "#434654"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "20px",
+                    "container-max": "1200px",
+                    "stack-sm": "12px",
+                    "base": "8px",
+                    "margin-desktop": "64px",
+                    "gutter": "24px",
+                    "stack-md": "24px",
+                    "stack-lg": "48px"
+            },
+            "fontFamily": {
+                    "label-caps": ["Manrope"],
+                    "display-lg-mobile": ["Playfair Display"],
+                    "headline-sm": ["Playfair Display"],
+                    "body-lg": ["Manrope"],
+                    "headline-md": ["Playfair Display"],
+                    "body-md": ["Manrope"],
+                    "display-lg": ["Playfair Display"]
+            },
+            "fontSize": {
+                    "label-caps": ["12px", {"lineHeight": "1.0", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                    "display-lg-mobile": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "headline-sm": ["24px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "headline-md": ["32px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "display-lg": ["64px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #020617;
+            color: #e1e3e4;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        .masonry-grid {
+            column-count: 1;
+            column-gap: 24px;
+        }
+        @media (min-width: 768px) {
+            .masonry-grid {
+                column-count: 2;
+            }
+        }
+        @media (min-width: 1024px) {
+            .masonry-grid {
+                column-count: 3;
+            }
+        }
+        .masonry-item {
+            break-inside: avoid;
+            margin-bottom: 24px;
+        }
+        .hero-reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .hero-reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .glow-button {
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(244, 114, 182, 0.2);
+        }
+        .glow-button:hover {
+            box-shadow: 0 0 30px rgba(244, 114, 182, 0.5);
+            transform: translateY(-2px);
+        }
+        .chat-bubble {
+            max-width: 85%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            margin-bottom: 8px;
+            animation: fadeInBubble 0.5s ease-out forwards;
+            opacity: 0;
+        }
+        @keyframes fadeInBubble {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .gallery-item {
+            overflow: hidden;
+            position: relative;
+        }
+        .gallery-item img {
+            transition: transform 0.8s cubic-bezier(0.33, 1, 0.68, 1);
+        }
+        .gallery-item:hover img {
+            transform: scale(1.08);
+        }
+        .gallery-caption {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.4s ease;
+        }
+        .gallery-item:hover .gallery-caption {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .purple-glow {
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(147, 51, 234, 0.15) 0%, rgba(147, 51, 234, 0) 70%);
+            border-radius: 50%;
+            z-index: -1;
+            pointer-events: none;
+        }
+        .pink-glow {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(236, 72, 153, 0.12) 0%, rgba(236, 72, 153, 0) 70%);
+            border-radius: 50%;
+            z-index: -1;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md">
+<div class="purple-glow top-[-100px] left-[-100px]"></div>
+<div class="pink-glow bottom-[-200px] right-[-100px]"></div>
+<script>
+        const STORY_DATA = {
+            startDate: "2024-12-27T00:00:00",
+            timeline: [
+                { id: 'al', title: 'A/L Classes', date: '2022 - 2024', content: 'Where it all began. Shared notes and secret glances in the back of the classroom.' },
+                { id: 'day-one', title: 'The Proposal', date: '27 Dec 2024', content: 'The day we officially promised to be by each other\'s side. "Would you like me?" "Yes, of course."' },
+                { id: 'ella', title: 'Ella Adventure', date: '18 Jan 2025', content: 'Our first trip. The mist, the Nine Arch Bridge, and holding hands in the cold mountain air.' },
+                { id: 'adventures', title: 'Countless Memories', date: 'Ongoing', content: 'Every cafe visit, every late-night call, and every small win we celebrate together.' },
+                { id: 'difficult', title: 'The Stronger Us', date: 'Life', content: 'For every challenge we faced, we came out holding each other tighter.' },
+                { id: 'continuing', title: 'Our Future', date: 'Always', content: 'Writing the rest of our book, one day at a time.' }
+            ],
+            photos: [
+                { src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCvwbw63hN9QiqJKyzE63s3tgF54T2GSntnYWZQUl75EqS0K8Z0GIpQcYU-cJc9zLHMsI5yRskkDGmU0t2PWn7yPc6HvbUwPjpgtocYjMh7YbZHtI63mqKlEF4GOrDlfT80oUqiPPa3tass_ZPksXaFD4HWE1Wnin5IS9gWy9tNtOV4tCeB5abT0WWqbEFW9bfzWTL8ICMw6r2P6qprcpSG0VjaSZlATjQRoa3omoFa45faZNn0cnLSOmLgsw25lQxg1Gg', note: 'Grace and elegance in purple.', date: 'Oct 2024' },
+                { src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDvwwmlM1u87XuPSEKmsrDR1tpJBQTaqwYkjZZCvgfG7AXCL0wp_zv8Mu7he6xo5MKHu1bD65mGOldwLj6_V-FkIQ9aR3t9RzjwTVzUFPrpYCrGTiMINxeR3F4bjbcXaHWX0KQds_kpUsgCS3vgpdTZlqp45z5J7HSxbmpTovehG7vGv3EBUXyz8Q4B8ksYGUVLkr7cjHqVXfxeLjNAenlQmLxvAm8MB3OGhD7716RVVdWh7Z0cE8SV9CsjKoY5T6OMhd8', note: 'Our fingers intertwined, a silent promise.', date: 'Dec 2024' },
+                { src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDlubFivILG7HQEJJ40l59gZmvla8KgMztp1HQl4-xAY1PS9PWgcPIUHE7gH-Kn0xOlgMNwoLw4aI765qzHUvTPAxeE0q3Q0aEcJUPdfLCioYnnSy-svuwFGOa9DL7lGTpwOdP1zBdS90yuCgYwNncEScD8ikuwaiJ5j1fqPZF8XAbygbYsQxOrELkiRzH05EtVlpsOez_Sn60wH5odJqNk9VTwqxjsZgQ2eDWg1RJlLcJMRWi5JShgvvxSNEN_ky6_3DE', note: 'Misty mornings and bridge views.', date: 'Jan 2025' },
+                { src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAUcKcPCHYATCT7g_hNPHS-17FQ9CT4EHaRTY4ROCkoEc7EXCy3ZhuR6264Vpmh5EOfvEV0L3QVpasaKduXGOIjrSLdKb2Hn0PGu2JEZm9OL3jg06PmrgxcGkOBQn6j7rBsL7gqKSXvNmLEWuwPZkb15hyx6alGuOoe_X7DS--lcJTrtFHkAbnnXvaxAT2r5o_EVCRt5O2wOyX9ZVy0DKRMvqUilyo0zR8gXZ9Vyr83_EszPOHkAhRdm9PLNplFjxz9nZ4', note: 'Laughter under the open sky.', date: 'Feb 2025' },
+                { src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDCqd-hMlovIS5Pe7nJJvfQ5hq8jhHQXXUAyY0Dvaa-5HvlhFvs9Cmv_itwejI_ZvJotiauKOYiblBF3VDPu3JrTjM9RVIlwflZcrjAiy8ux89nBBgbNjuWXpYvDw33ae_uxRhLcnnnpfZkcakbr8tSGftYbM1dgapSmXeJ8AxUFuK3oihsntxzOvCfkbO1JD-upYTv2D1RdG52_fhDxKLeLWtRFzod9shz6E1jYYy780e4z5aBh-dtAhWNsfeWePWFFfc', note: 'Matching in dark shirts, matching in heart.', date: 'Mar 2025' },
+                { src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAqDJB_Yy1jowIJe1KtCo4Xgj4KcVqbY1oECezJx8oVo5ac9yycUUL9qoHBHpRqdO0zt1wDfLlmHSz7bvMX4y0PlHqWfsEX9330t44ZKBs_jW7VA0KrhZhIT170RmpTUzk69MtYuS5Y02KCQq30CsXjiWme0gCeXYkV8-CXPgXeZ2KQoYM2cdwBThwZQzlSB84XcKZFd2jzklanproafxq05I8x5Ld-g_lz9RrUtubzrP2ZqluMzf5E8fXHG4QzUUdAwJI', note: 'Side by side, ready for the world.', date: 'Apr 2025' }
+            ],
+            letters: [
+                { id: 'miss', trigger: 'Miss me', content: 'Close your eyes. I am right there with you, holding your hand. Distance is just a test to see how far love can travel.' },
+                { id: 'sad', trigger: 'Sad', content: 'Remember our laughter in Ella? This sadness is temporary, but my love for you is permanent. Smile for me?' },
+                { id: 'smile', trigger: 'Need a smile', content: 'Remember the time I tried to be serious but you made me laugh? You are my sunshine, Dilru.' }
+            ],
+            quiz: [
+                { q: "Where was our first official date?", options: ["Colombo", "Ella", "Kandy", "Galle"], correct: 1 },
+                { q: "What date did we start our journey?", options: ["Dec 25", "Dec 27", "Jan 1", "Jan 18"], correct: 1 },
+                { q: "Which class did we meet in?", options: ["Maths", "Bio", "A/L Classes", "English"], correct: 2 },
+                { q: "What was the first thing Sudda said in the chat?", options: ["Hello", "Would you like me?", "Good morning", "Hey"], correct: 1 },
+                { q: "Where did we see the Nine Arch Bridge?", options: ["Haputale", "Ella", "Badulla", "Nuwara Eliya"], correct: 1 }
+            ]
+        };
+    </script>
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-slate-950/60 backdrop-blur-2xl border-b border-white/5">
+<div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4 max-w-container-max mx-auto">
+<div class="font-display-lg text-headline-sm text-primary tracking-tight">Sudda &amp; Dilru</div>
+<div class="hidden md:flex items-center gap-stack-md">
+<a class="text-on-surface/70 font-medium hover:text-primary transition-colors text-sm" href="#welcome">Journal</a>
+<a class="text-on-surface/70 font-medium hover:text-primary transition-colors text-sm" href="#gallery">Memories</a>
+<a class="text-on-surface/70 font-medium hover:text-primary transition-colors text-sm" href="#timeline">Chapters</a>
+<a class="text-on-surface/70 font-medium hover:text-primary transition-colors text-sm" href="#letters">Letters</a>
+</div>
+<div class="flex items-center gap-stack-sm">
+<span class="material-symbols-outlined text-primary/80 hover:text-primary cursor-pointer transition-colors">favorite</span>
+</div>
+</div>
+</nav>
+<!-- Hero Section -->
+<header class="relative min-h-screen w-full flex items-center justify-center pt-20 overflow-hidden bg-slate-950">
+<div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(147,51,234,0.1),transparent_70%)]"></div>
+<div class="relative z-10 text-center px-margin-mobile max-w-4xl mx-auto">
+<div class="hero-reveal mb-stack-md" id="intro-step-1">
+<span class="inline-block px-4 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-[10px] font-bold uppercase tracking-[0.2em] mb-4">The Modern Journal</span>
+<p class="font-headline-sm text-on-surface/60 italic">A digital archive of us.</p>
+</div>
+<div class="hero-reveal mb-stack-lg" id="intro-step-2" style="transition-delay: 1s">
+<h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-white leading-none mb-6">SUDDA <span class="text-primary">×</span> DILRU</h1>
+</div>
+<div class="hero-reveal" id="intro-step-3" style="transition-delay: 2s">
+<p class="text-on-surface-variant max-w-xl mx-auto mb-10 text-lg">Since December 27, 2024, our lives have been a beautiful sequence of shared moments, growing together through every sunset.</p>
+<a class="glow-button inline-flex items-center gap-3 px-10 py-4 bg-white text-slate-950 rounded-full font-bold uppercase text-[11px] tracking-widest transition-all" href="#gallery">
+                    Explore Our Gallery <span class="material-symbols-outlined text-sm">arrow_downward</span>
+</a>
+</div>
+</div>
+</header>
+<!-- Masonry Gallery Section -->
+<section class="py-stack-lg px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto" id="gallery">
+<div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+<div class="max-w-xl">
+<span class="text-[10px] text-primary font-bold uppercase tracking-[0.3em] mb-3 block">Visual Archive</span>
+<h2 class="font-display-lg text-headline-md md:text-display-lg-mobile text-white leading-tight">Moments Frozen in Time</h2>
+</div>
+<p class="text-on-surface-variant text-sm md:text-base md:text-right max-w-xs italic">
+                A dynamic collection of our favorite snapshots, from Ella's mist to classroom whispers.
+            </p>
+</div>
+<div class="masonry-grid" id="masonry-container">
+<!-- Items will be injected here -->
+</div>
+</section>
+<!-- Relationship Counter & Progress -->
+<section class="py-24 bg-slate-900/40 border-y border-white/5" id="welcome">
+<div class="max-w-container-max mx-auto px-margin-mobile text-center">
+<div class="mb-12">
+<h3 class="text-on-surface/40 text-xs font-bold uppercase tracking-widest mb-2">Our Time Together</h3>
+<div class="flex flex-wrap justify-center gap-4 md:gap-8" id="live-counter">
+<div class="flex flex-col">
+<span class="text-4xl md:text-6xl font-display-lg text-white" id="count-days">00</span>
+<span class="text-[10px] text-primary font-bold uppercase">Days</span>
+</div>
+<div class="flex flex-col">
+<span class="text-4xl md:text-6xl font-display-lg text-white" id="count-hours">00</span>
+<span class="text-[10px] text-primary font-bold uppercase">Hours</span>
+</div>
+<div class="flex flex-col">
+<span class="text-4xl md:text-6xl font-display-lg text-white" id="count-mins">00</span>
+<span class="text-[10px] text-primary font-bold uppercase">Mins</span>
+</div>
+<div class="flex flex-col">
+<span class="text-4xl md:text-6xl font-display-lg text-white" id="count-secs">00</span>
+<span class="text-[10px] text-primary font-bold uppercase">Secs</span>
+</div>
+</div>
+</div>
+<div class="max-w-2xl mx-auto h-[1px] bg-gradient-to-r from-transparent via-primary/30 to-transparent my-12"></div>
+<p class="font-headline-sm text-white/80 max-w-2xl mx-auto leading-relaxed">
+                "Every second spent with you feels like a chapter of a book I never want to finish reading."
+            </p>
+</div>
+</section>
+<!-- Interactive Timeline Section -->
+<section class="py-stack-lg px-margin-mobile md:px-margin-desktop max-w-5xl mx-auto" id="timeline">
+<div class="text-center mb-16">
+<span class="text-[10px] text-secondary font-bold uppercase tracking-[0.3em] mb-3 block">Timeline</span>
+<h2 class="font-display-lg text-headline-md md:text-display-lg-mobile text-white">Our Shared History</h2>
+</div>
+<div class="relative">
+<!-- Center Line -->
+<div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-[1px] bg-white/10 -translate-x-1/2"></div>
+<div class="space-y-16" id="timeline-container">
+<!-- Timeline items injected by JS -->
+</div>
+</div>
+</section>
+<!-- Communication & Letters -->
+<section class="py-24 bg-slate-950" id="letters">
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop grid lg:grid-cols-2 gap-16 items-center">
+<div class="space-y-8">
+<div>
+<span class="text-[10px] text-primary font-bold uppercase tracking-[0.3em] mb-3 block">Digital Heartbeat</span>
+<h2 class="font-display-lg text-headline-md text-white mb-6">Fragments of Us</h2>
+<p class="text-on-surface-variant max-w-md">Our communication is the thread that keeps us connected across any distance. Here are some special notes for you.</p>
+</div>
+<div class="space-y-4" id="letters-container">
+<!-- Letters Injected by JS -->
+</div>
+</div>
+<!-- Chat Mockup with Modern Look -->
+<div class="glass-card rounded-[32px] overflow-hidden border-white/10 shadow-2xl">
+<div class="bg-white/5 px-8 py-6 flex items-center justify-between border-b border-white/5">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-gradient-to-tr from-primary to-secondary flex items-center justify-center font-bold text-slate-950 text-xl shadow-lg shadow-primary/20">D</div>
+<div>
+<p class="font-bold text-white leading-none mb-1">Dilru</p>
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+<span class="text-[10px] text-white/50 uppercase tracking-tighter">Connected</span>
+</div>
+</div>
+</div>
+<span class="material-symbols-outlined text-white/20">more_vert</span>
+</div>
+<div class="p-8 h-[400px] overflow-y-auto space-y-6 bg-slate-950/20 flex flex-col scrollbar-hide" id="chat-container">
+<!-- Messages Injected -->
+</div>
+<div class="p-6 bg-white/5 border-t border-white/5">
+<div class="flex gap-4 items-center bg-slate-950/50 rounded-2xl px-6 py-3 border border-white/5">
+<span class="text-white/30 text-sm italic">Typing memory...</span>
+<span class="material-symbols-outlined text-primary/40 ml-auto">send</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Quiz Section -->
+<section class="py-24 px-margin-mobile relative overflow-hidden" id="quiz">
+<div class="absolute inset-0 bg-primary/5 blur-[120px] rounded-full -translate-y-1/2"></div>
+<div class="max-w-3xl mx-auto glass-card p-10 md:p-16 rounded-[40px] text-center relative z-10">
+<span class="text-[10px] text-secondary font-bold uppercase tracking-[0.3em] mb-4 block">Test Your Heart</span>
+<div id="quiz-content">
+<h2 class="font-display-lg text-headline-sm md:text-headline-md text-white mb-10">How well do you remember our journey?</h2>
+<button class="glow-button px-12 py-5 bg-white text-slate-950 rounded-full font-bold uppercase text-xs tracking-widest transition-all" onclick="startQuiz()">
+                    Start The Quiz
+                </button>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-slate-950 border-t border-white/5 py-16">
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop flex flex-col md:flex-row justify-between items-center gap-10">
+<div class="text-center md:text-left">
+<div class="font-display-lg text-headline-sm text-white mb-2">Sudda &amp; Dilru</div>
+<p class="text-white/40 text-xs uppercase tracking-widest">Est. December 2024 • Forever to go</p>
+</div>
+<div class="flex gap-8">
+<a class="text-white/60 hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined">heart_plus</span></a>
+<a class="text-white/60 hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined">music_note</span></a>
+<a class="text-white/60 hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined">star</span></a>
+</div>
+<div class="text-white/30 text-[10px] uppercase tracking-widest font-bold">
+                With all my love.
+            </div>
+</div>
+</footer>
+<!-- Cinematic Overlay for Surprise -->
+<div class="fixed inset-0 z-[100] bg-slate-950/95 backdrop-blur-xl opacity-0 pointer-events-none flex items-center justify-center transition-opacity duration-700" id="cinematic-overlay">
+<div class="text-center scale-90 transition-transform duration-700 max-w-lg px-6" id="surprise-content">
+<span class="material-symbols-outlined text-primary text-6xl mb-8">favorite</span>
+<h2 class="text-display-lg text-white mb-6">Dilru,</h2>
+<p class="text-headline-sm text-white/70 leading-relaxed italic mb-12 font-light">"You are the most beautiful part of my everyday life. Thank you for choosing me."</p>
+<button class="text-white/30 hover:text-white transition-colors text-[10px] uppercase tracking-[0.4em] font-bold" onclick="closeSurprise()">End Journal</button>
+</div>
+</div>
+<script>
+        // --- Initialization ---
+        window.addEventListener('DOMContentLoaded', () => {
+            initMasonryGallery();
+            initTimeline();
+            initLetters();
+            startCounter();
+            initChat();
+            
+            setTimeout(() => document.getElementById('intro-step-1').classList.add('active'), 500);
+            setTimeout(() => document.getElementById('intro-step-2').classList.add('active'), 1200);
+            setTimeout(() => document.getElementById('intro-step-3').classList.add('active'), 1900);
+        });
+
+        // --- Counter ---
+        function startCounter() {
+            const start = new Date(STORY_DATA.startDate);
+            const update = () => {
+                const now = new Date();
+                const diff = now - start;
+                
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+                if(document.getElementById('count-days')) document.getElementById('count-days').innerText = String(days).padStart(2, '0');
+                if(document.getElementById('count-hours')) document.getElementById('count-hours').innerText = String(hours).padStart(2, '0');
+                if(document.getElementById('count-mins')) document.getElementById('count-mins').innerText = String(mins).padStart(2, '0');
+                if(document.getElementById('count-secs')) document.getElementById('count-secs').innerText = String(secs).padStart(2, '0');
+            };
+            setInterval(update, 1000);
+            update();
+        }
+
+        // --- Masonry Gallery ---
+        function initMasonryGallery() {
+            const container = document.getElementById('masonry-container');
+            STORY_DATA.photos.forEach(photo => {
+                const item = document.createElement('div');
+                item.className = "masonry-item gallery-item group rounded-[32px] glass-card p-2 overflow-hidden";
+                item.innerHTML = `
+                    <div class="relative rounded-[24px] overflow-hidden aspect-auto">
+                        <img src="${photo.src}" alt="Memory" class="w-full h-auto block object-cover">
+                        <div class="gallery-caption absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent flex flex-col justify-end p-8">
+                            <span class="text-[10px] text-primary font-bold uppercase tracking-widest mb-1">${photo.date}</span>
+                            <p class="text-white text-sm font-medium leading-snug">"${photo.note}"</p>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        // --- Timeline ---
+        function initTimeline() {
+            const container = document.getElementById('timeline-container');
+            STORY_DATA.timeline.forEach((item, idx) => {
+                const isEven = idx % 2 === 0;
+                const div = document.createElement('div');
+                div.className = `flex flex-col md:flex-row items-center w-full ${isEven ? 'md:flex-row-reverse' : ''}`;
+                div.innerHTML = `
+                    <div class="w-full md:w-1/2 px-8 py-4 ${isEven ? 'md:text-left' : 'md:text-right'}">
+                        <div class="glass-card p-8 rounded-[32px] hover:border-primary/30 transition-all group">
+                            <span class="text-[10px] text-primary font-bold uppercase tracking-widest mb-2 block">${item.date}</span>
+                            <h4 class="text-white font-headline-sm text-xl mb-3">${item.title}</h4>
+                            <p class="text-on-surface-variant text-sm leading-relaxed">${item.content}</p>
+                        </div>
+                    </div>
+                    <div class="absolute left-4 md:left-1/2 w-4 h-4 bg-primary rounded-full -translate-x-1/2 z-10 border-4 border-slate-950 shadow-[0_0_15px_rgba(255,175,211,0.5)]"></div>
+                    <div class="w-full md:w-1/2 px-8 hidden md:block"></div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // --- Letters ---
+        function initLetters() {
+            const container = document.getElementById('letters-container');
+            STORY_DATA.letters.forEach(letter => {
+                const div = document.createElement('div');
+                div.className = "glass-card p-6 rounded-2xl flex justify-between items-center cursor-pointer hover:bg-white/5 transition-all group border-white/5 hover:border-primary/20";
+                div.innerHTML = `
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined text-xl">auto_stories</span>
+                        </div>
+                        <div>
+                            <p class="text-xs text-white/40 font-bold uppercase tracking-widest">Open When You...</p>
+                            <p class="text-white font-medium">${letter.trigger}</p>
+                        </div>
+                    </div>
+                    <span class="material-symbols-outlined text-white/20 group-hover:text-primary transition-colors">arrow_forward</span>
+                `;
+                div.onclick = () => {
+                    const overlay = document.getElementById('cinematic-overlay');
+                    const content = document.getElementById('surprise-content');
+                    content.innerHTML = `
+                        <span class="material-symbols-outlined text-primary text-5xl mb-6">mail</span>
+                        <h2 class="text-headline-sm text-white mb-6 uppercase tracking-[0.2em]">For ${letter.trigger}</h2>
+                        <p class="text-white/80 leading-loose italic mb-10 text-lg">"${letter.content}"</p>
+                        <button class="text-white/30 hover:text-white transition-colors text-[10px] uppercase tracking-[0.4em] font-bold" onclick="closeSurprise()">Close Note</button>
+                    `;
+                    overlay.classList.remove('pointer-events-none');
+                    overlay.classList.add('opacity-100');
+                    setTimeout(() => content.classList.remove('scale-90'), 10);
+                };
+                container.appendChild(div);
+            });
+        }
+
+        // --- Chat ---
+        function initChat() {
+            const chatContainer = document.getElementById('chat-container');
+            const messages = [
+                { sender: 'dilru', text: 'Would you like me?', delay: 3000 },
+                { sender: 'sudda', text: 'Yes, of course...', delay: 5000 },
+                { sender: 'sudda', text: 'I’m still waiting to propose to you.', delay: 7000 }
+            ];
+            function addMessage(msg) {
+                const div = document.createElement('div');
+                div.className = msg.sender === 'dilru' 
+                    ? 'chat-bubble bg-white/5 border border-white/5 text-white/90 self-start rounded-bl-none' 
+                    : 'chat-bubble bg-primary/20 border border-primary/20 text-white self-end rounded-br-none';
+                div.innerHTML = `<p class="text-sm font-medium leading-relaxed">${msg.text}</p>`;
+                chatContainer.appendChild(div);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }
+            messages.forEach(msg => setTimeout(() => addMessage(msg), msg.delay));
+        }
+
+        // --- Quiz Logic ---
+        let currentQuizIdx = 0;
+        function startQuiz() {
+            currentQuizIdx = 0;
+            showQuestion();
+        }
+        function showQuestion() {
+            const q = STORY_DATA.quiz[currentQuizIdx];
+            const content = document.getElementById('quiz-content');
+            content.innerHTML = `
+                <span class="text-xs text-primary/60 font-bold uppercase tracking-widest mb-4 block">Question ${currentQuizIdx + 1} / ${STORY_DATA.quiz.length}</span>
+                <h2 class="font-headline-sm text-white mb-10">${q.q}</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    ${q.options.map((opt, i) => `<button onclick="checkAnswer(${i})" class="px-8 py-5 glass-card rounded-2xl text-white font-medium hover:bg-primary/10 hover:border-primary/30 transition-all text-sm">${opt}</button>`).join('')}
+                </div>
+            `;
+        }
+        function checkAnswer(idx) {
+            if (idx === STORY_DATA.quiz[currentQuizIdx].correct) {
+                currentQuizIdx++;
+                if (currentQuizIdx < STORY_DATA.quiz.length) {
+                    showQuestion();
+                } else {
+                    document.getElementById('quiz-content').innerHTML = `
+                        <div class="py-10">
+                            <span class="material-symbols-outlined text-primary text-6xl mb-6">verified_user</span>
+                            <h2 class="font-display-lg text-headline-sm text-white mb-4">Heart Confirmed.</h2>
+                            <p class="text-on-surface-variant mb-10">You know every detail of our story. I'm so lucky to have you.</p>
+                            <button onclick="revealFinal()" class="glow-button px-10 py-4 bg-white text-slate-950 rounded-full font-bold uppercase text-[10px] tracking-widest">Final Message</button>
+                        </div>
+                    `;
+                }
+            } else {
+                alert("Try again, my love! ❤️");
+            }
+        }
+
+        function revealFinal() {
+            const overlay = document.getElementById('cinematic-overlay');
+            const content = document.getElementById('surprise-content');
+            overlay.classList.remove('pointer-events-none');
+            overlay.classList.add('opacity-100');
+            setTimeout(() => content.classList.remove('scale-90'), 10);
+        }
+
+        function closeSurprise() {
+            const overlay = document.getElementById('cinematic-overlay');
+            const content = document.getElementById('surprise-content');
+            overlay.classList.add('opacity-0');
+            overlay.classList.add('pointer-events-none');
+            content.classList.add('scale-90');
+        }
+
+        // Parallax Effect
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const purple = document.querySelector('.purple-glow');
+            const pink = document.querySelector('.pink-glow');
+            if (purple) purple.style.transform = `translate(${scrolled * 0.05}px, ${scrolled * 0.05}px)`;
+            if (pink) pink.style.transform = `translate(-${scrolled * 0.05}px, -${scrolled * 0.05}px)`;
+        });
+    </script>
+</body></html>

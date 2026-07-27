@@ -1,0 +1,6 @@
+{
+  "name": "PhysixLanka - A/L Physics Web Learning Portal",
+  "description": "Sri Lankan G.C.E. A/L Physics online learning portal with AI problem solver, full Sinhala (සිංහල) step-by-step explanations, topic short notes, standard practical guides, interactive quizzes, and reference videos.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
