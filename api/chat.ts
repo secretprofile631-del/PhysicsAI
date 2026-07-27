@@ -119,7 +119,7 @@ ${isSinhala
       await client.chat.completions.create({
 
        model:
-"meta-llama/llama-3.1-8b-instruct",
+"google/gemma-3-4b-it:free",
 
         messages
 
